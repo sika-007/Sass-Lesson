@@ -1,0 +1,140 @@
+@import "./_resets";
+@import "./_variables";
+ //This is how we import partials in sass. Pay attention to the syntax
+
+/*
+Always remember that any vaild css is also valid sass
+
+//SASS VARIABLES
+Normal css Variables
+
+:root {
+   v --primary-color: #272727;
+    --accent-color: #ff652f;
+    --text-color: #fff;
+}*/
+//With sass we can get rid of the ":root and curly braces and we can then replace the '--' at te beginning with '$' similar to what will be demonstrated below"
+
+// sass variables
+$primary-color: #272727;
+$accent-color: #ff652f;
+$text-color: #fff;
+
+//Also note the following changes to how the scss variables are called
+
+
+//MAPS
+/*These can be thought of as arrays in plain JS. They are lists of key-value pairs
+Let's create one*/
+
+$font-weights: (
+    "regular": 400,
+    "medium": 500,
+    "bold": 700
+);
+
+body {
+    background: $primary-color;
+    color: $text-color;
+}
+
+.main {
+    width: 80%;
+    margin: 0 auto;
+
+    #{&}__paragraph { //& = .main (The parent identifier in this case), We also use "#{}" which aka inoterpolation to ensure that all the ansestors of this class are included as we target it.  
+        font-weight: map-get($font-weights, "bold"); //we use the map-get() scss method and pass in the variable name as well as the key that corresponds the the required value
+        font-family: $font-base;
+        &:hover { //Now we don't use any interpolation in this case because we do not need to select all the ancestors to create something like a hover effect.
+            color: pink;          
+        }
+    }
+}
+
+//Refer to _resets.scss for the next section in this lesson
+
+//Going forward, we can also break out the variables we used here into a different partial. Like we said, using partial makes our scss much more modularised and maintainable
+
+
+// FUNCTIONS 
+// Functions in sass work similarly to those in javascript. Let us attempt to create one below
+
+@function weight($weight-name) {
+    @return map-get($font-weights, $weight-name)
+}
+
+.main {
+    #{&}__paragraph1 {
+        text-align: center;
+        margin-top: 2rem;
+        font-weight: weight(bold);
+        font-family: "Cormorant Upright", sans-serif;
+    } 
+}
+
+//MIXINS
+// These are similar to functions. Let's demonstrate
+
+@mixin flexCenter($direction) { //With mixins you can also pass in arguments 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: $direction;
+}
+
+@mixin theme($light-theme: true) { //Just like js you can add conditional statements in mixins. 
+    @if $light-theme {
+        background: lighten($primary-color, 100%);
+        color: darken($text-color, 100%);
+        //These css properties and their values will be added to the css only if the condition returns true.
+    }
+}
+
+@mixin mobile { //This is just a way to add media queries more easily using mixins 
+    @media screen and (max-width: $mobile){
+        @content
+    }
+}
+
+/*Use functions to compute stuff and use mixins for styles*/
+
+
+.main {
+    /* display: flex;
+    justify-content: center;
+    align-items: center;
+    Say we had different divs that we wanted to apply these styles to. through the use of mixins, we won't need to repeat ourselves over and over again. We can just do the following */
+    //Similar to functions, we can also pass arguments into a mixin.
+    @include flexCenter(row);
+
+    @include mobile {
+        flex-direction: column;
+    }
+}
+
+.light {
+    @include theme($light-theme: true) /*Or we can just pass true as the argument. But we add the $light-theme variable to make the code more readable*/
+}
+
+//EXTENSIONS
+//Say we want to extend all the styles of __paragraph to __paragraph1, we use extensions by doing the following
+
+.main {
+  gap: 40px;
+  #{&}__paragraph {
+    line-height: 2rem;
+  } //Say we want to add these styles to the next paragraph without repeating ourselves, we will do the following
+  #{&}__paragraph1 {
+    @extend .main__paragraph; //What if after we have extended the same properties, we still want to add a few of our own. Well.. There is no special syntax for this. we cn just add those styles freely.
+    &:hover {
+        color: $accent-color;
+    }
+  }
+}
+
+//OPERATIONS
+//In everyday css, we have the calc() function for doing math on our property values. In sass however, we dont need the calc() function. We could just add the math expressions and the compiler will handle the rest. for example
+
+.main {
+    width: 80% - 10% //We have to keep in mind that we cannot use more than one unit in sass as opposed to using the calc() function in css. 
+}

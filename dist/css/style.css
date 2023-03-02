@@ -1,0 +1,83 @@
+/*This current file is what is referred to as a partial. Partials arre modularized snippets of scss that can make the job of maintenance much easier.
+
+Pay Attention to the file name. it begins with an underscore "_" This is how the sass compiler knows that it should not directly compile it into regular css> the underscore also lets it know that the file is a partial. let us write some code to demonstrate how partials work.*/
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Upright:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;500;600;700&display=swap");
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+}
+
+/*
+Always remember that any vaild css is also valid sass
+
+//SASS VARIABLES
+Normal css Variables
+
+:root {
+   v --primary-color: #272727;
+    --accent-color: #ff652f;
+    --text-color: #fff;
+}*/
+/*These can be thought of as arrays in plain JS. They are lists of key-value pairs
+Let's create one*/
+body {
+  background: #272727;
+  color: #fff;
+}
+
+.main {
+  width: 80%;
+  margin: 0 auto;
+}
+.main .main__paragraph, .main .main__paragraph1 {
+  font-weight: 700;
+  font-family: "Cormorant Upright";
+}
+.main .main__paragraph:hover, .main .main__paragraph1:hover {
+  color: pink;
+}
+
+.main .main__paragraph1 {
+  text-align: center;
+  margin-top: 2rem;
+  font-weight: 700;
+  font-family: "Cormorant Upright", sans-serif;
+}
+
+/*Use functions to compute stuff and use mixins for styles*/
+.main {
+  /* display: flex;
+  justify-content: center;
+  align-items: center;
+  Say we had different divs that we wanted to apply these styles to. through the use of mixins, we won't need to repeat ourselves over and over again. We can just do the following */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+}
+@media screen and (max-width: 800px) {
+  .main {
+    flex-direction: column;
+  }
+}
+
+.light {
+  background: white;
+  color: black;
+}
+
+.main {
+  gap: 40px;
+}
+.main .main__paragraph, .main .main__paragraph1 {
+  line-height: 2rem;
+}
+.main .main__paragraph1:hover {
+  color: #ff652f;
+}
+
+.main {
+  width: 70%;
+}/*# sourceMappingURL=style.css.map */

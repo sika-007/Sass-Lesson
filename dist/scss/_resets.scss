@@ -1,0 +1,12 @@
+//PARTIALS
+/*This current file is what is referred to as a partial. Partials arre modularized snippets of scss that can make the job of maintenance much easier.
+
+Pay Attention to the file name. it begins with an underscore "_" This is how the sass compiler knows that it should not directly compile it into regular css> the underscore also lets it know that the file is a partial. let us write some code to demonstrate how partials work.*/
+
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    scroll-behavior: smooth;
+}
